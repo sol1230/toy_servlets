@@ -3,30 +3,58 @@ package com.sol1230.toy_servlets.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PollWithDB {
 
-  public HashMap<String, Object> getQuestion(String questionsUid)
+  // 질문 출력
+  public HashMap<String, Object> geQuestion(String quesitons_uid)
     throws SQLException {
     Commons commons = new Commons();
-    Statement statement = commons.getStatement();
+    Statement questionStatement = commons.getStatement();
+
+    String query = "SELECT * FROM QUESTIONS_LIST " + "ORDER BY ORDERS";
+    ResultSet resultSetQue = questionStatement.executeQuery(query);
+
+    HashMap<String, Object> question = null;
+    while (resultSetQue.next()) {
+      question = new HashMap<>();
+      question.put("ORDERS", resultSetQue.getInt("ORDERS"));
+      question.put("QUESTIONS", resultSetQue.getString("QUESTIONS"));
+      question.put("QUESTIONS_UID", resultSetQue.getString("QUESTIONS_UID"));
+    }
+    return question;
+  }
+
+  // 답 출력
+  public ArrayList<HashMap> getAnswer(String questions_uid)
+    throws SQLException {
+    Commons commons = new Commons();
+    Statement answerStatement = commons.getStatement();
 
     String query =
-      "SELECT * FROM QUESTIONS_LIST " +
+      "SELECT EXAMPLE_LIST.EXAMPLE_UID, EXAMPLE_LIST.ORDERS, EXAMPLE_LIST.EXAMPLE " +
+      "FROM ANSWERS" +
+      "INNER JOIN EXAMPLE_LIST" +
+      "ON ANSWERS.EXAMPLE_UID = EXAMPLE_LIST.EXAMPLE_UID" +
       " WHERE QUESTIONS_UID = '" +
-      questionsUid +
-      "'";
+      questions_uid +
+      "' " +
+      "ORDER BY ORDERS";
 
-    ResultSet resultSet = statement.executeQuery(query);
-    HashMap<String, Object> result = null;
-    while (resultSet.next()) {
-      result = new HashMap<>();
-      result.put("QUESTIONS_UID", resultSet.getString("QUESTIONS_UID"));
-      result.put("QUESTIONS", resultSet.getString("QUESTIONS"));
-      result.put("ORDERS", resultSet.getInt("ORDERS"));
+    ResultSet resultSetAns = answerStatement.executeQuery(query);
+    ArrayList<HashMap> answers = new ArrayList<>();
+    HashMap<String, Object> example_list = null;
+
+    while (resultSetAns.next()) {
+      example_list = new HashMap<>();
+      example_list.put("ORDERS", resultSetAns.getInt("ORDERS"));
+      example_list.put("EXAMPLE", resultSetAns.getString("EXAMPLE"));
+      example_list.put("EXAMPLE_UID", resultSetAns.getString("EXAMPLE_UID"));
+
+      answers.add(example_list);
     }
-
-    return result;
+    return answers;
   }
 }

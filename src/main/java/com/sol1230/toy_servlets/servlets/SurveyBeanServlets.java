@@ -1,5 +1,7 @@
-package com.sol1230.toy_servlets.survey;
+package com.sol1230.toy_servlets.servlets;
 
+import com.sol1230.toy_servlets.survey.DataInfo;
+import com.sol1230.toy_servlets.survey.MemberBean;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;

@@ -11,7 +11,7 @@
       <a href="/poll/pollServlet?order=2">Prev</a> Current Number : 3
       <a href="/poll/pollServlet?order=4">Next</a>
     </div>
- 
+
     <div>2. 주문시 직원은 고객님께 친절하였습니까?</div>
     <div>(1) 전혀 아니다 (2) 아니다 (3) 보통이다</div>
   </body>
