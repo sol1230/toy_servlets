@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.HashMap;
 
@@ -24,10 +25,10 @@ public class DetailServlets_us extends HttpServlet {
     String questions_Uid = request.getParameter("QUESTIONS_UID");
 
     // biz with DB and Class
-    PollWithDB_us pollWithDB = new PollWithDB_us();
+    PollWithDB_us PollWithDB_us = new PollWithDB_us();
     HashMap<String, Object> question = null;
     try {
-      question = pollWithDB.getQuestion(questions_Uid);
+      question = PollWithDB_us.getQuestion(questions_Uid);
       System.out.println(question.get("QUESTIONS_UID"));
       System.out.println(question.get("QUESTIONS"));
       System.out.println(question.get("ORDERS"));

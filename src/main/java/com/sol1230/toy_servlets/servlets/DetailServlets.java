@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class DetailServlets extends HttpServlet {
   )
     throws ServletException, IOException {
     // input type
-    response.setContentType("text/html;charset=UTF-8");
+    // response.setContentType("text/html;charset=UTF-8");
     String questions_Uid = request.getParameter("QUESTIONS_UID");
 
     // biz with DB and Class
@@ -33,11 +34,12 @@ public class DetailServlets extends HttpServlet {
 
     //display
     try {
-      question = pollWithDB.geQuestion(questions_Uid);
+      question = pollWithDB.getQuestion(questions_Uid);
       answers = pollWithDB.getAnswer(questions_Uid);
     } catch (SQLException e) {
       e.printStackTrace();
     }
+
     // output with html
     request.setAttribute("question", question);
     request.setAttribute("answers", answers);

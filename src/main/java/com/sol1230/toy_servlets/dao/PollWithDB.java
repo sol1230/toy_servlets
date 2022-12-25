@@ -9,12 +9,16 @@ import java.util.HashMap;
 public class PollWithDB {
 
   // 질문 출력
-  public HashMap<String, Object> geQuestion(String quesitons_uid)
+  public HashMap<String, Object> getQuestion(String questions_uid)
     throws SQLException {
     Commons commons = new Commons();
     Statement questionStatement = commons.getStatement();
 
-    String query = "SELECT * FROM QUESTIONS_LIST " + "ORDER BY ORDERS";
+    String query =
+      "SELECT * FROM QUESTIONS_LIST " +
+      " WHERE QUESTIONS_UID = '" +
+      questions_uid +
+      "'";
     ResultSet resultSetQue = questionStatement.executeQuery(query);
 
     HashMap<String, Object> question = null;
@@ -34,14 +38,11 @@ public class PollWithDB {
     Statement answerStatement = commons.getStatement();
 
     String query =
-      "SELECT EXAMPLE_LIST.EXAMPLE_UID, EXAMPLE_LIST.ORDERS, EXAMPLE_LIST.EXAMPLE " +
-      "FROM ANSWERS" +
-      "INNER JOIN EXAMPLE_LIST" +
-      "ON ANSWERS.EXAMPLE_UID = EXAMPLE_LIST.EXAMPLE_UID" +
+      "SELECT * FROM ANSWERS INNER JOIN EXAMPLE_LIST " +
+      " ON ANSWERS.EXAMPLE_UID = EXAMPLE_LIST.EXAMPLE_UID " +
       " WHERE QUESTIONS_UID = '" +
       questions_uid +
-      "' " +
-      "ORDER BY ORDERS";
+      "'";
 
     ResultSet resultSetAns = answerStatement.executeQuery(query);
     ArrayList<HashMap> answers = new ArrayList<>();
